@@ -1,5 +1,6 @@
 const randomColor = document.getElementById('color-palette');
 const board = document.getElementById('pixel-board');
+const colors = randomColor.children;
 
 const generateRandomColor = (div) => {
   var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -20,8 +21,18 @@ createDiv();
 const firstColorBlack = () => {
   const firstColor = document.getElementsByClassName('color')[0];
   firstColor.style.backgroundColor = 'black';
+  firstColor.classList.add('selected');
 };
 firstColorBlack();
+
+function onlyOneSelectedColor(event) {
+  for (let index = 0; index < colors.length; index += 1) {
+    colors[index].classList.remove('selected');
+  }
+  event.target.classList.add('selected');
+}
+
+randomColor.addEventListener('click', onlyOneSelectedColor);
 
 // REFERÊNCIAS
 //
