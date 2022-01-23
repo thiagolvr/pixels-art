@@ -1,0 +1,17 @@
+#title {
+  text-align: center;
+}
+
+#color-palette {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.color {
+  border: 1px solid black;
+  border-radius: 45%;
+  padding: 20px;
+}
