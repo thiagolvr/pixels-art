@@ -1,23 +1,26 @@
-const randomColor = document.getElementById('color-palette');
-const board = document.getElementById('pixel-board');
-const colors = randomColor.children;
+const paletteFather = document.getElementById('color-palette');
+const paletteChilds = paletteFather.children;
+const pixelBoard = document.getElementById('pixel-board');
 
-const generateRandomColor = (div) => {
-  var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+// função que gera as cores aleatórias
+const generateRandomColor = () => {
+  const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   return randomColor;
 };
-
-const createDiv = () => {
+// função que cria as quatro div filha da paleta e adiciona as cores aleatórias geradas pela função acima
+const createPaletteChilds = () => {
   const div = document.createElement('div');
   div.className = 'color';
   div.style.backgroundColor = `${generateRandomColor()}`;
-  randomColor.appendChild(div);
+  paletteFather.appendChild(div);
 };
-createDiv();
-createDiv();
-createDiv();
-createDiv();
 
+createPaletteChilds();
+createPaletteChilds();
+createPaletteChilds();
+createPaletteChilds();
+
+// função que define a cor preta como cor inicial a primeira div
 const firstColorBlack = () => {
   const firstColor = document.getElementsByClassName('color')[0];
   firstColor.style.backgroundColor = 'black';
@@ -25,14 +28,24 @@ const firstColorBlack = () => {
 };
 firstColorBlack();
 
+// função que adiciona a classe selected em apenas uma div de cada vez
 function onlyOneSelectedColor(event) {
-  for (let index = 0; index < colors.length; index += 1) {
-    colors[index].classList.remove('selected');
+  for (let index = 0; index < paletteChilds.length; index += 1) {
+    paletteChilds[index].classList.remove('selected');
   }
   event.target.classList.add('selected');
 }
 
-randomColor.addEventListener('click', onlyOneSelectedColor);
+// função que pinta os pixels com as cores da paleta (falhando)
+const paintPixels = (event) => {
+  if (event.target.className === 'pixel') {
+    event.target.style.backgroundColor =
+      document.querySelector('.color.selected').style.backgroundColor;
+  }
+};
+
+pixelBoard.addEventListener('click', paintPixels);
+paletteFather.addEventListener('click', onlyOneSelectedColor);
 
 // REFERÊNCIAS
 //
