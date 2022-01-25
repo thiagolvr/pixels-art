@@ -2,6 +2,8 @@ const paletteFather = document.getElementById('color-palette');
 const paletteChilds = paletteFather.children;
 const pixelBoard = document.getElementById('pixel-board');
 const clearButton = document.getElementById('clear-board');
+const input = document.getElementById('board-size');
+const generateButton = document.getElementById('generate-board');
 
 // função que gera as cores aleatórias
 const generateRandomColor = () => {
@@ -10,15 +12,13 @@ const generateRandomColor = () => {
 };
 // função que cria as quatro div filha da paleta e adiciona as cores aleatórias geradas pela função acima
 const createPaletteChilds = () => {
-  const div = document.createElement('div');
-  div.className = 'color';
-  div.style.backgroundColor = `${generateRandomColor()}`;
-  paletteFather.appendChild(div);
+  for (let index = 1; index < 5; index += 1) {
+    const div = document.createElement('div');
+    div.className = 'color';
+    div.style.backgroundColor = `${generateRandomColor()}`;
+    paletteFather.appendChild(div);
+  }
 };
-
-createPaletteChilds();
-createPaletteChilds();
-createPaletteChilds();
 createPaletteChilds();
 
 // função que define a cor preta como cor inicial a primeira div
@@ -51,8 +51,40 @@ const cleared = () => {
     pixel[index].style.backgroundColor = 'white';
   }
 };
+let pixelSize = 5;
+
+const createBoard = (pixelSize) => {
+  for (let index = 0; index < pixelSize; index += 1) {
+    const pixelLine = document.createElement('div');
+    pixelLine.classList.add('pixel-line');
+    pixelBoard.appendChild(pixelLine);
+    for (let index = 0; index < pixelSize; index += 1) {
+      const pixel = document.createElement('div');
+      pixel.className = 'pixel';
+      pixelLine.appendChild(pixel);
+    }
+  }
+};
+createBoard(pixelSize);
+
+const customBoard = () => {
+  let inputNumbers = input.value;
+  if (inputNumbers === '') {
+    alert('Board Inválido!');
+  } else if (inputNumbers < 5 && inputNumbers <= 50) {
+    alert('número inválido');
+  }
+  const pixel = document.querySelectorAll('.pixel');
+  let pixelLineFather = document.getElementsByClassName('pixel-line');
+
+  while (pixelLineFather.length > 0) {
+    pixelLineFather[0].parentNode.removeChild(pixelLineFather[0]);
+  }
+  createBoard(inputNumbers);
+};
 
 function addListener() {
+  generateButton.addEventListener('click', customBoard);
   clearButton.addEventListener('click', cleared);
   pixelBoard.addEventListener('click', paintPixels);
   paletteFather.addEventListener('click', onlyOneSelectedColor);
