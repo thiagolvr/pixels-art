@@ -1,6 +1,7 @@
 const paletteFather = document.getElementById('color-palette');
 const paletteChilds = paletteFather.children;
 const pixelBoard = document.getElementById('pixel-board');
+const clearButton = document.getElementById('clear-board');
 
 // função que gera as cores aleatórias
 const generateRandomColor = () => {
@@ -44,8 +45,19 @@ const paintPixels = (event) => {
   }
 };
 
-pixelBoard.addEventListener('click', paintPixels);
-paletteFather.addEventListener('click', onlyOneSelectedColor);
+const cleared = () => {
+  const pixel = document.getElementsByClassName('pixel');
+  for (let index = 0; index < pixel.length; index += 1) {
+    pixel[index].style.backgroundColor = 'white';
+  }
+};
+
+function addListener() {
+  clearButton.addEventListener('click', cleared);
+  pixelBoard.addEventListener('click', paintPixels);
+  paletteFather.addEventListener('click', onlyOneSelectedColor);
+}
+addListener();
 
 // REFERÊNCIAS
 //
